@@ -3,7 +3,7 @@
 1. Clonar um repositório
 
 ```shell
-git clone url
+git clone htpps://github.com/usuario/repositorio
 
 ```
 

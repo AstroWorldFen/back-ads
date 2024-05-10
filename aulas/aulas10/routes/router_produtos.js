@@ -4,6 +4,6 @@ const controllerProdutos = require('../controllers/controller_produtos');
 
 const router = express.Router();
 
-router.post('/', (req, res) => res.status(201).json({}));
+router.post('/', controllerProdutos.validar, controllerProdutos.criar);
 
-module.exports = router; 
+module.exports = router;  

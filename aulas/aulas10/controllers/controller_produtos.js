@@ -8,13 +8,13 @@ async function validar(req, res, next) {
     await produto.validate();
     next();
   } catch(error) {
-  res.status(422).json({});
+    res.status(422).json({msg: "Dados invalidos do produto"});
   }
 }
 
 async function criar(req, res) {
   const produto = await Produto.create(req.body);
-  res.status(201).json(produto);  
+  res.status(201).json(produto);
 }
 
 async function listar(req, res) {
@@ -22,10 +22,27 @@ async function listar(req, res) {
   res.json(produtos);
 }
 
+async function buscar(req, res, next) {
+  try {
+  const id = new mongoose.Types.ObjectId(req.params.id);
+  const produto = await Produto.findOne({ _id: id });
+  if (produto) {
+    next();
+  } else {
+    res.status(404).json({msg: "Produto nao encontrado"})
+  }  
+} catch (error) {
+  res.status(400).json({ msg: "id invalido"});
+ }
+}
+
 async function obter(req, res) {
   const id = new mongoose.Types.ObjectId(req.params.id);
   const produto = await Produto.findOne({ _id: id });
-  res.json(produto );
+  res.json(produto);
 }
 
-module.exports = { criar, validar, listar, obter };  
+async function atualizar(req, res) {
+  res.json({});
+}
+module.exports = { criar, validar, listar, obter, buscar, atualizar }; 
